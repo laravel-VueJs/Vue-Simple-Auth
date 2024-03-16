@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import AuthState from './data/authstate.js'
 </script>
 
 <template>
@@ -9,12 +10,16 @@ import HelloWorld from './components/HelloWorld.vue'
 
     <div class="wrapper">
       <HelloWorld msg="Authentication" />
-
+      <!-- <div>
+        Username: {{ AuthState.username}} <br>
+        Password: {{ AuthState.password}}
+      </div> -->
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/secret">Secret</RouterLink>
+        <RouterLink v-if="!AuthState.isAuthenticated" to="/login">Login</RouterLink>
+        <a href="#" v-if="AuthState.isAuthenticated" @click="AuthState.logout()">Logout</a>
+        <RouterLink v-show="AuthState.isAuthenticated" to="/secret">Secret</RouterLink>
 
       </nav>
     </div>
